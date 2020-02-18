@@ -65,7 +65,6 @@ function calculate(x, y){
     for(i=0 ;i<10; i++){
         newArray.push((x[i] + y[i]) % 10)
     }
-    console.log(newArray)
     return newArray
 }
 
@@ -76,7 +75,6 @@ function doHash(sum){
     while (hashedSum.substr(0, 4) !== '0000') {
         nonce++
         hashedSum = hash(sum + nonce)
-        console.log("found hash " + hashedSum)
     }
     console.log("juiste nonce gevonden: " + nonce)
 
@@ -128,8 +126,6 @@ function createTransactionString(string, block){
             block.transactions[0].amount + 
             block.transactions[0].timestamp + 
             block.timestamp
-            
-    console.log(block.timestamp)
     console.log("New Box String: " + s)
     return s
 }
