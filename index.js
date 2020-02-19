@@ -69,6 +69,7 @@ function calculate(x, y){
 }
 
 function doHash(sum){
+    console.log("Started noncing...")
     let nonce = 0
     let hashedSum = hash(sum + nonce)
 
