@@ -1,5 +1,10 @@
 const axios = require("axios")
-const crypto = require("crypto")
+
+// Importing helpers
+const convertToAscii = require("./helpers/convertToAscii")
+const convertToSeparation = require("./helpers/convertToSeparation")
+const charToBlocks = require("./helpers/charToBlocks")
+const mod10 = require("./helpers/mod10")
 
 function hash(string){
     // convert text to ASCII, text must be converted by letter
@@ -7,65 +12,13 @@ function hash(string){
 
     // Splice numbers into empty array, numbers must be separated
     let separatedArray = convertToSeparation(ascii)
-
+    
     // From this array, add up so that there will be blocks with 10 characters
     let firstBlock = charToBlocks(separatedArray)
 
     // perform the mod10 algorithm
     let sum = mod10(separatedArray, firstBlock)
     return sum
-}
-
-function convertToAscii(string){
-    let ascii = []
-    string = string.replace(/\s/g, '')
-    var splittedText = string.split("")
-    for(let char of splittedText){
-        if(!isNaN(parseInt(char))){
-            ascii.push(char)
-        } else {
-            ascii.push(char.charCodeAt(0))  
-        }
-    }
-    return ascii
-}
-
-function convertToSeparation(ascii){
-    let separatedArray = []
-    for(let char of ascii){
-        let splittedChar = char.toString().split("")
-        for (let arrayNumber of splittedChar){
-            separatedArray.push(parseInt(arrayNumber))
-        }
-    }
-    return separatedArray
-}
-
-function charToBlocks(separatedArray){ 
-    var s = separatedArray.length % 10
-    var restNumber = 10 - s
-    for (i=0; i < restNumber; i++){
-        separatedArray.push(i)
-    }  
-    var firstBlock = separatedArray.splice(0, 10)
-    return firstBlock
-}
-
-function mod10(separatedArray, sum){
-    if(separatedArray.length === 0){
-        sum = sum.toString().replace(/,/g,'')
-        return crypto.createHash('sha256').update(sum).digest('hex')
-    }
-    let nextBlock = separatedArray.splice(0, 10)
-    return mod10(separatedArray, calculate(sum, nextBlock))
-}
-
-function calculate(x, y){
-    var newArray = []
-    for(i=0 ;i<10; i++){
-        newArray.push((x[i] + y[i]) % 10)
-    }
-    return newArray
 }
 
 function doHash(sum){
