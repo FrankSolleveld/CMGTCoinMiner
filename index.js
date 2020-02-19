@@ -132,3 +132,5 @@ function createTransactionString(string, block){
 }
 
 (getPreviousBlock())
+
+module.exports = hash
