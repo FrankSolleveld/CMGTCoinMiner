@@ -14,5 +14,7 @@
     "axios": "^0.19.2",
     "nodemon": "^2.0.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^25.1.0"
+  }
 }
