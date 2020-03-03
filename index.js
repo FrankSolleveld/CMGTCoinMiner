@@ -26,7 +26,7 @@ function doHash(sum){
     let nonce = 0
     let hashedSum = hash(sum + nonce)
 
-    process.nextTick(() => checkHash(hashedSum, nonce, sum), 0)
+    checkHash(hashedSum, nonce, sum)
 }
 
 function checkHash(hashedSum, nonce, sum) {
@@ -53,7 +53,9 @@ function checkHash(hashedSum, nonce, sum) {
     } else {
         nonce++
         hashedSum = hash(sum + nonce)
-        return checkHash(hashedSum, nonce, sum)
+
+        // If you;d just call the function, you would probably get out of memory since there are too much calls going on. Node provides an easy function to limit this.
+        return process.nextTick(() => checkHash(hashedSum, nonce, sum), 0)
     }
 }
 

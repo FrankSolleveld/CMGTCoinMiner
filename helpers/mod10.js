@@ -10,7 +10,7 @@ const mod10 = (separatedArray, sum) => {
 }
 
 function calculate(x, y){
-    var newArray = []
+    let newArray = []
     for(i=0 ;i<10; i++){
         newArray.push((x[i] + y[i]) % 10)
     }

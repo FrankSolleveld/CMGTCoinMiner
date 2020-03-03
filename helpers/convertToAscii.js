@@ -3,7 +3,7 @@
 const convertToAscii = (string) => {
     let ascii = []
     string = string.replace(/\s/g, '')
-    var splittedText = string.split("")
+    let splittedText = string.split("")
     ascii = splittedText.map((char) => {
         return !isNaN(parseInt(char)) ? char : char.charCodeAt(0) 
     })
