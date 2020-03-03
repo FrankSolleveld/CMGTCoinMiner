@@ -59,7 +59,7 @@ function checkHash(hashedSum, nonce, sum) {
     }
 }
 
-function getPreviousBlock() {
+function startMining() {
     axios.get('https://programmeren9.cmgt.hr.nl:8000/api/blockchain/next')
         .then(res => {
             let oldBlock = hash(createLastBoxString(res.data))
@@ -92,6 +92,10 @@ function createTransactionString(string, block){
     return s
 }
 
-(getPreviousBlock())
+// startMining starts the process by firstly getting the previous block.
+
+// If you receive error: "Cannot read property 'hash' of undefined" --> someone else mined and gate is closed.
+
+(startMining())
 
 module.exports = hash
