@@ -26,11 +26,12 @@ function doHash(sum){
     let nonce = 0
     let hashedSum = hash(sum + nonce)
 
-    while (hashedSum.substr(0, 4) !== '0000') {
-        nonce++
-        hashedSum = hash(sum + nonce)
-    }
-    console.log("juiste nonce gevonden: " + nonce)
+    process.nextTick(() => checkHash(hashedSum, nonce, sum), 0)
+}
+
+function checkHash(hashedSum, nonce, sum) {
+    if (hashedSum.substr(0, 4) == '0000'){
+        console.log("juiste nonce gevonden: " + nonce)
 
     axios.post('https://programmeren9.cmgt.hr.nl:8000/api/blockchain', {
         nonce: nonce,
@@ -49,6 +50,11 @@ function doHash(sum){
 
         }
     })
+    } else {
+        nonce++
+        hashedSum = hash(sum + nonce)
+        return checkHash(hashedSum, nonce, sum)
+    }
 }
 
 function getPreviousBlock() {
