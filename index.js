@@ -1,6 +1,6 @@
 const axios = require("axios")
 
-// Importing helpers
+// Helpers
 const convertToAscii = require("./helpers/convertToAscii")
 const convertToSeparation = require("./helpers/convertToSeparation")
 const charToBlocks = require("./helpers/charToBlocks")
