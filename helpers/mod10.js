@@ -1,8 +1,10 @@
 const crypto = require("crypto")
 
+// Recursion + First Class Citizen since function returns a function
 const mod10 = (separatedArray, sum) => {
     if(separatedArray.length === 0){
         sum = sum.toString().replace(/,/g,'')
+        // Function Composition
         return crypto.createHash('sha256').update(sum).digest('hex')
     }
     let nextBlock = separatedArray.splice(0, 10)
