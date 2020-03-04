@@ -60,11 +60,18 @@ function checkHash(hashedSum, nonce, sum) {
 }
 
 function startMining() {
+    // First grab the latest block data
     axios.get('https://programmeren9.cmgt.hr.nl:8000/api/blockchain/next')
         .then(res => {
-            let oldBlock = hash(createLastBoxString(res.data))
-            let transaction = createTransactionString(oldBlock, res.data)
-            doHash(transaction)
+            if (res.data.open){
+                // The last box string is created and immediately hashed.
+                let oldBlock = hash(createLastBoxString(res.data))
+                // The transaction string is created with the hash of the lastblockstring. After that it is hashed and nonce is checked.
+                let transaction = createTransactionString(oldBlock, res.data)
+                doHash(transaction)
+            } else {
+                console.log("De poort is gesloten.")
+            }
         })
         .catch(err => console.log(err))
 }
