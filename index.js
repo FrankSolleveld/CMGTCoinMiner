@@ -45,16 +45,16 @@ function checkHash(hashedSum, nonce, sum) {
             console.log('Nonce was: ', nonce)
             console.log("Hashed sum: " + hashedSum)
             console.log(res.data.message)
+            startMining()
         } else {
             console.log(res.data.message)
-
         }
     })
     } else {
         nonce++
         hashedSum = hash(sum + nonce)
 
-        // If you;d just call the function, you would probably get out of memory since there are too much calls going on. Node provides an easy function to limit this.
+        // If you'd just call the function, you would probably get out of memory since there are too much calls going on. Node provides an easy function to limit this.
         return process.nextTick(() => checkHash(hashedSum, nonce, sum), 0)
     }
 }
@@ -70,7 +70,9 @@ function startMining() {
                 let transaction = createTransactionString(oldBlock, res.data)
                 doHash(transaction)
             } else {
-                console.log("De poort is gesloten.")
+                console.log("De poort is gesloten, countdown: " + res.data.countdown)
+                // No need to restart mining process yourself. Code here takes care of that for you.
+                setTimeout(() => startMining(), res.data.countdown)
             }
         })
         .catch(err => console.log(err))
